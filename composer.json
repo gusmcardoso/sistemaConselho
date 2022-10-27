@@ -1,0 +1,11 @@
+{
+    "name": "wdev/vagas",
+    "autoload":{
+        "psr-4":{
+            "App\\":"app/"
+        }
+    },
+    "require": {
+        "google/apiclient": "^2.12"
+    }
+}
