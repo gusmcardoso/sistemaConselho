@@ -1,6 +1,6 @@
 <?php
 namespace App\Db;
-use \PDO;
+use PDO;
 use PDOException;
 
 class DataBase{
@@ -42,6 +42,7 @@ class DataBase{
         $binds = array_pad([], count($fields),'?');
 
         $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
+        
         $this->execute($query, array_values($values));
         return $this->connection->lastInsertId();
 
@@ -51,10 +52,8 @@ class DataBase{
         $fields = array_keys($values);
        
         $query = 'UPDATE '.$this->table.' SET '.implode('=?,',$fields).'=? WHERE '.$where;
-        echo $query;
         $this->execute($query, array_values($values));
-        echo $query;
-        //return true;
+        return true;
 
     }
 
@@ -71,10 +70,11 @@ class DataBase{
 
         $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
         
+        /*
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-        
+        */
         
         return $this->execute($query);
     }

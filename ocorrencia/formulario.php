@@ -17,11 +17,6 @@
             <label for="descricao">Descrição</label>
             <textarea name="descricao" class="form-control" rows="4" required><?=$ocorrencia->descricao?></textarea>
         </div>
-        
-        <div class="form-group">
-            <label for="servidor">Servidor</label>
-            <input type="text" name="servidor" class="form-control"  required value="<?=$ocorrencia->servidor?>">
-        </div>
         <div class="form-group">
             <label for="setor_registro">Setor de registro</label>
             <select name="setor_registro" class="form-control" required>
@@ -29,7 +24,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="setor_destino">Setor de destino</label>
+            <label for="setor_destino">Encaminhar para</label>
             <select name="setor_destino" class="form-control" required>
                 <?php include ('../includes/select-setor.php'); ?>
             </select>

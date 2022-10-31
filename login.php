@@ -17,8 +17,12 @@ if ($cookie != $_POST['g_csrf_token']) {
 
 $client = new Google_Client(['client_id' => '530889397644-6tof0lg4qnnkbpbkujhpdv8dghre1pfc.apps.googleusercontent.com']);  // Specify the CLIENT_ID of the app that accesses the backend
 $payload = $client->verifyIdToken($_POST['credential']);
-
-
+/*
+echo "<pre>";
+print_r($payload);
+echo "<\pre>";
+exit;
+*/
 if(isset($payload['email'])){
    $valida = User::login($payload['name'],$payload['given_name'],$payload['family_name'],$payload['email'],$payload['picture']);
    if ($valida == false) {

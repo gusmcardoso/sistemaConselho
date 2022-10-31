@@ -5,24 +5,23 @@
     use \App\Entity\Ocorrencia;
     use App\Entity\Aluno;
     use App\Entity\Setor;
+    use App\Session\User;
 
-if(isset($_POST['servidor'],$_POST['descricao'])){
+if(isset($_POST['aluno'],$_POST['descricao'])){
     
         $ocorrencia = new Ocorrencia;
         $aluno = new Aluno;
         $setor_registro = new Setor;
         $setor_destino = new Setor;
-       
+        $usuario = User::getInfo();
         $aluno = $aluno->getAluno($_POST['aluno']);
-        
         $setor_registro = $setor_registro->getSetor($_POST['setor_registro']);
-        
         $setor_destino = $setor_destino->getSetor($_POST['setor_destino']);
 
         $ocorrencia->id =  $_POST['id']; 
         $ocorrencia->aluno =  $aluno; 
         $ocorrencia->descricao =  $_POST['descricao']; 
-        $ocorrencia->servidor =  $_POST['servidor'];
+        $ocorrencia->servidor = $usuario['nome']; 
         $ocorrencia->setor_registro =  $setor_registro;
         $ocorrencia->setor_destino =  $setor_destino;
     

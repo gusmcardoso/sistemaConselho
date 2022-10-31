@@ -6,12 +6,16 @@
             <a class="btn btn-primary" href="/sistemas/vaga/listar.php">Vagas de Estagio</a>
         </div>
         <?php
-        $info = App\Session\User::getInfo();
+        $usuario = App\Session\User::getInfo();
         ?>
         <div class="col-md-4">
-            <button class="btn btn-info">Bem vindo <?= $info['primeiro_nome']; ?></button>
+            <button class="btn btn-info">Bem vindo <?= $usuario['primeiro_nome']; ?></button>
             <a href="/sistemas/logout.php" class="btn btn-danger">Sair</button></a>
+           
         </div>
     </div>
 </nav>
 <br>
+<!--
+<img class="img-thumbnail" src="<?= $usuario['foto'] ?>" width="300px" height="400px">
+-->

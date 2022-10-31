@@ -4,8 +4,6 @@
 
     require (__DIR__.'/../vendor/autoload.php');
 
-    //$alunos = Aluno::getAlunos();
-    
     include (__DIR__.'/../includes/header.php');
 
     include (__DIR__.'/../includes/menu.php');
