@@ -10,9 +10,8 @@
          <div class="card-content collpase show">
             <div class="card-body">
                <h4 class="auth-header">Use seu Email Institucional para entrar no sistema</h4>
-
-               <div id="g_id_onload" data-client_id="530889397644-6tof0lg4qnnkbpbkujhpdv8dghre1pfc.apps.googleusercontent.com" data-login_uri="http://localhost/sistemas/login.php" data-auto_prompt="false">
-               </div>
+               <div id="g_id_onload" data-client_id="530889397644-6tof0lg4qnnkbpbkujhpdv8dghre1pfc.apps.googleusercontent.com" data-login_uri="http://ti.ifto.edu.br/sistemas/login.php" data-auto_prompt="false">
+            </div>
                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
                </div>
             </div>
