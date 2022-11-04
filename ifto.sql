@@ -1,9 +1,9 @@
+
 CREATE TABLE usuario(
     id int NOT NULL auto_increment primary key,
     nome varchar(220),
     email varchar(220) not null unique
 );
-insert into usuario (nome, email) values ('Euzebio', 'euzebio@ifto.edu.br');
 
 create table vaga(
     id int auto_increment primary key,
@@ -24,19 +24,6 @@ create table setor(
 insert into setor (nome) values ('CTI');
 insert into setor (nome) values ('CAE');
 insert into setor (nome) values ('COTEPE');
-
-create table aluno(
-    id int auto_increment primary key,
-    nome varchar(255),
-    cpf varchar(255) unique, 
-    telefone varchar(255),
-    email_institucional varchar(255),
-    email_pessoal varchar(255),
-    matricula varchar(255),
-    curso varchar(255)
-);
-
-insert into aluno (nome, cpf, telefone, email_institucional, email_pessoal, matricula, curso) values ('Admin','000.000.000-00','0000','admin@ifto.edu.br','admin@gmail.com','000','Tecnologia da Informação');
 
 create table ocorrencia(
     id int auto_increment primary key,

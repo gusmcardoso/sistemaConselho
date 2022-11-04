@@ -9,7 +9,7 @@
         $usuario = App\Session\User::getInfo();
         ?>
         <div class="col-md-4">
-            <button class="btn btn-info">Bem vindo <?= $usuario['primeiro_nome']; ?></button>
+            <button class="btn btn-info">Bem vindo <?= $usuario['login']; ?></button>
             <a href="/sistemas/logout.php" class="btn btn-danger">Sair</button></a>
            
         </div>

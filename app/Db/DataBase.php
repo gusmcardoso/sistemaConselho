@@ -4,9 +4,9 @@ use PDO;
 use PDOException;
 
 class DataBase{
-    const HOST = 'localhost';
-    const DBNAME = 'ifto';
-    const USER = 'root';
+    const HOST = '192.168.102.77';
+    const DBNAME = 'ifto2';
+    const USER = 'dba';
     const PASS = '123';
     
     private $table;
@@ -74,8 +74,7 @@ class DataBase{
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-        */
-        
+         */       
         return $this->execute($query);
     }
     

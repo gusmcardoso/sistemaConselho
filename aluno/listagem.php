@@ -13,14 +13,25 @@ if (isset($_GET['status'])) {
             break;
     }
 }
-if(!empty($_GET['search']) and !empty($_GET['pCurso'])){
+if(!empty($_GET['search']) and !empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])){
+    $pCurso = $_GET['pCurso'];
+    $pesquisa = $_GET['search'];
+    $pPeriodo = $_GET['pPeriodo'];
+    $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND periodo LIKE "%' . $pPeriodo . '%" AND (nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%")');
+
+}elseif(!empty($_GET['search']) and !empty($_GET['pCurso'])){
     
     $pCurso = $_GET['pCurso'];
     $pesquisa = $_GET['search'];
     $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND (nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%")');
+
+}elseif(!empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])){
     
-}elseif (!empty($_GET['pCurso']) or !empty($_GET['search'])) {
-    
+        $pCurso = $_GET['pCurso'];
+        $pPeriodo = $_GET['pPeriodo'];
+        $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND periodo LIKE "%' . $pPeriodo . '%"');
+
+    }elseif (!empty($_GET['pCurso']) or !empty($_GET['search'])) {
     if(!empty($_GET['pCurso'])){
         $pCurso = $_GET['pCurso']; 
         $pesquisa = $_GET['pCurso'];   
@@ -31,7 +42,7 @@ if(!empty($_GET['search']) and !empty($_GET['pCurso'])){
     
     $alunos = Aluno::getAlunos('nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%" OR curso LIKE "%' . $pCurso . '%"');
 }else{
-    
+   
     $alunos = Aluno::getAlunos();
 }
 
@@ -39,10 +50,11 @@ $resultados = '';
 foreach ($alunos as $aluno) {
     $resultados .= '<tr>
             <td>' . $aluno->nome . '</td>
-            <td>' . $aluno->matricula . '</td>
             <td>' . $aluno->telefone . '</td>
+            <td>' . $aluno->telefone_responsavel . '</td>
             <td>' . $aluno->email_institucional . '</td>
             <td>' . $aluno->curso . '</td>
+            <td>' . $aluno->periodo . '</td>
             <td><a href="vizualizar.php?id=' . $aluno->id . '"><button class="btn btn-sm btn-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg></button></a>
@@ -63,15 +75,15 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
                 <td></td>
                 <td><select class="form-control" name="pCurso" id="pCurso">
                 <option value="">Selecione o Curso</option>
-                    <option value="Técnico em Administração - Integrada - Série Anual">Técnico em Administração - Integrada - Série Anual</option>
-                    <option value="Técnico em Meio Ambiente - Integrada - Série Anual">Técnico em Meio Ambiente - Integrada - Série Anual</option>
-                    <option value="Técnico em Informática para Internet - Integrada - Série Anual">Técnico em Informática para Internet - Integrada - Série Anual</option>
+                    <option value="Administração">Técnico em Administração - Integrada - Série Anual</option>
+                    <option value="Meio Ambiente">Técnico em Meio Ambiente - Integrada - Série Anual</option>
+                    <option value="Informática para Internet">Técnico em Informática para Internet - Integrada - Série Anual</option>
                 </select></td>
                 <td><select class="form-control" name="pPeriodo" id="pPeriodo">
                 <option value="">Selecione o Periodo</option>
-                    <option value="1º">1º</option>
-                    <option value="2º">2º</option>
-                    <option value="3º">3º</option>
+                    <option value="1">1º</option>
+                    <option value="2">2º</option>
+                    <option value="3">3º</option>
                 </select></td>
             </tr>
             <tr>
@@ -87,10 +99,11 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
             <thead class="table-dark">
                 <tr>
                     <th>Nome</th>
-                    <th>Matricula</th>
                     <th>Telefone</th>
+                    <th>Telefone do Responsavel</th>
                     <th>Email Institucional</th>
                     <th>Curso</th>
+                    <th>Periodo</th>
                     <th><-Ações-></th>
                 </tr>
             </thead>
@@ -103,6 +116,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
 <script>
             var search = document.getElementById('pesquisar');
             var pCurso = document.getElementById('pCurso');
+            var pPeriodo = document.getElementById('pPeriodo');
             
             search.addEventListener("keydown", function(event) {
                 if (event.key === "Enter") {
@@ -113,9 +127,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
 
 
             function searchData() {
-                console.log('seach = '+search.value);
-                console.log('pCurso = '+pCurso.value);
-                window.location = 'listar.php?search='+ search.value +'&pCurso='+ pCurso.value;
+                window.location = 'listar.php?search='+ search.value +'&pCurso='+ pCurso.value +'&pPeriodo='+ pPeriodo.value;
             }
             
         </script>

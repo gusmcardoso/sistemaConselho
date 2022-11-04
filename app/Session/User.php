@@ -16,9 +16,7 @@ class User{
     public static function login($nome, $primeiro_nome, $sobrenome, $email, $foto){
         self::init();
         $usuario = self::getUsuario($email);
-        echo "<pre>";
-print_r($usuario);
-echo "<\pre>";
+        
 
         if($email == $usuario->email){
             $_SESSION['user'] = [
@@ -32,6 +30,15 @@ echo "<\pre>";
         }else{
             return false;
         }        
+
+    }
+    public static function loginAD($login){
+        self::init();
+            $_SESSION['user'] = [
+                'login' => $login
+            ];
+            return true;
+                
 
     }
     public static function isLogged(){

@@ -21,7 +21,7 @@ if(isset($_POST['aluno'],$_POST['descricao'])){
         $ocorrencia->id =  $_POST['id']; 
         $ocorrencia->aluno =  $aluno; 
         $ocorrencia->descricao =  $_POST['descricao']; 
-        $ocorrencia->servidor = $usuario['nome']; 
+        $ocorrencia->servidor = $usuario['login']; 
         $ocorrencia->setor_registro =  $setor_registro;
         $ocorrencia->setor_destino =  $setor_destino;
     
