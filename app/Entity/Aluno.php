@@ -18,6 +18,7 @@ class Aluno{
     public $curso_full;
     public $periodo;
     public $dtn;
+    public $ocorrencias;
 
 /*
     private $id;

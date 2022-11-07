@@ -6,7 +6,11 @@
             <a class="btn btn-primary" href="/sistemas/vaga/listar.php">Vagas de Estagio</a>
         </div>
         <?php
-        $usuario = App\Session\User::getInfo();
+        if(App\Session\User::isLogged()){
+            $usuario = App\Session\User::getInfo();
+        }else{
+            header('location: ../index.php');
+        }
         ?>
         <div class="col-md-4">
             <button class="btn btn-info">Bem vindo <?= $usuario['login']; ?></button>
@@ -16,6 +20,3 @@
     </div>
 </nav>
 <br>
-<!--
-<img class="img-thumbnail" src="<?= $usuario['foto'] ?>" width="300px" height="400px">
--->

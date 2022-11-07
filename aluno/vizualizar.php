@@ -1,11 +1,12 @@
 <?php
 
 use App\Entity\Aluno;
-
+use App\Entity\Ocorrencia;
 
 require(__DIR__ . '/../vendor/autoload.php');
 
 $aluno = Aluno::getAluno($_GET['id']);
+$ocorrencias = Ocorrencia::getOcorrencias('aluno = '.$_GET['id']);
 
 
 $mensagem = '';
@@ -19,6 +20,11 @@ if (isset($_GET['status'])) {
             break;
     }
 }
+$oc = '';
+foreach($ocorrencias as $ocorrencia){
+    $oc .= $ocorrencia->descricao.'<br>';
+    
+}
 $resultados = '';
 $resultados .=
     '<tr>
@@ -31,9 +37,8 @@ $resultados .=
             <tr><th class="table-dark">Email Pessoal</th><th class="table-secondary">' . $aluno->email_pessoal . '</th></tr>
             <tr><th class="table-dark">Curso</th><th class="table-secondary">' . $aluno->curso . '</th>
             <tr><th class="table-dark">Periodo</th><th class="table-secondary">' . $aluno->periodo . '</th>
-            <tr><th class="table-dark">Data de Nascimento</th><th class="table-secondary">'.date('d/m/Y', strtotime($aluno->dtn)).'</th></tr>>;
-            
-    </tr>';
+            <tr><th class="table-dark">Data de Nascimento</th><th class="table-secondary">'.date('d/m/Y', strtotime($aluno->dtn)).'</th>
+            <tr><th class="table-dark">Ocorrencias</th><th class="table-secondary">' . $oc . '</th></tr>';
 $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="text-center">Não há alunos disponiveis no momento!</td></tr>';
 
 include(__DIR__ . '/../includes/header.php');
@@ -47,6 +52,7 @@ include(__DIR__ . '/../includes/menu.php');
     <section>
         <a href="listar.php"><button class="btn btn-success">Voltar</button></a>
         <a href="editar.php?id=<?=$aluno->id?>"><button type="button" class="btn btn-primary">Editar</button></a>
+        <a href="../ocorrencia/cadastrar.php?aluno=<?=$aluno->id?>"><button class="btn btn-success">Fazer ocorrência</button></a>
     </section>
     <section>
         <div class="row">

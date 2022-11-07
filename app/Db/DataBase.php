@@ -74,7 +74,7 @@ class DataBase{
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-         */       
+        */       
         return $this->execute($query);
     }
     

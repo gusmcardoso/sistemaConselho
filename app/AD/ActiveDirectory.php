@@ -86,7 +86,7 @@ class ActiveDirectory {
    public function getUser($user) {   
      
        if($this->connect() === true) {
-           $searchResults = ldap_search($this->ldapBind , 'cn=users,dc=ifto,dc=local' , '(|(samaccountname='.$user.'))'); 
+           $searchResults = ldap_search($this->ldapBind , 'cn=users,dc=ifto,dc=local' , '(|(sAMAccountName='.$user.'))'); 
            
             if (count(ldap_get_entries($this->ldapBind , $searchResults)) > 1) {
                $object = ldap_get_entries($this->ldapBind , $searchResults);
