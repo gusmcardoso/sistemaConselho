@@ -4,8 +4,8 @@ use PDO;
 use PDOException;
 
 class DataBase{
-    const HOST = '192.168.102.77';
-    const DBNAME = 'ifto2';
+    const HOST = 'localhost';
+    const DBNAME = 'ifto';
     const USER = 'dba';
     const PASS = '123';
     

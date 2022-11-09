@@ -22,7 +22,7 @@ if (!empty($_GET['search'])) {
     
 } else {
     
-    $ocorrencias = Ocorrencia::getOcorrencias();
+    $ocorrencias = Ocorrencia::getOcorrencias(null,'id desc',20);
 }
 $resultados = '';
     foreach($ocorrencias as $ocorrencia){
@@ -76,7 +76,7 @@ $resultados = '';
                     <th>Setor de Registro</th>
                     <th>Setor de Destino</th>
                     <th>Data da Ocorrencia</th>
-                    <th>Ações</th>
+                    <th><--Ações--></th>
                 </tr>
             </thead>
             <tbody>

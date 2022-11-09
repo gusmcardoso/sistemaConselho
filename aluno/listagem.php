@@ -104,7 +104,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
                     <th>Email Institucional</th>
                     <th>Curso</th>
                     <th>Periodo</th>
-                    <th><-Ações-></th>
+                    <th><--Ações--></th>
                 </tr>
             </thead>
             <tbody>
