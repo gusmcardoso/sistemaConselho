@@ -13,37 +13,34 @@ if (isset($_GET['status'])) {
             break;
     }
 }
-if(!empty($_GET['search']) and !empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])){
+if (!empty($_GET['search']) and !empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])) {
     $pCurso = $_GET['pCurso'];
     $pesquisa = $_GET['search'];
     $pPeriodo = $_GET['pPeriodo'];
     $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND periodo LIKE "%' . $pPeriodo . '%" AND (nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%")');
+} elseif (!empty($_GET['search']) and !empty($_GET['pCurso'])) {
 
-}elseif(!empty($_GET['search']) and !empty($_GET['pCurso'])){
-    
     $pCurso = $_GET['pCurso'];
     $pesquisa = $_GET['search'];
     $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND (nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%")');
+} elseif (!empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])) {
 
-}elseif(!empty($_GET['pCurso']) and !empty($_GET['pPeriodo'])){
-    
+    $pCurso = $_GET['pCurso'];
+    $pPeriodo = $_GET['pPeriodo'];
+    $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND periodo LIKE "%' . $pPeriodo . '%"');
+} elseif (!empty($_GET['pCurso']) or !empty($_GET['search'])) {
+    if (!empty($_GET['pCurso'])) {
         $pCurso = $_GET['pCurso'];
-        $pPeriodo = $_GET['pPeriodo'];
-        $alunos = Aluno::getAlunos('curso LIKE "%' . $pCurso . '%" AND periodo LIKE "%' . $pPeriodo . '%"');
-
-    }elseif (!empty($_GET['pCurso']) or !empty($_GET['search'])) {
-    if(!empty($_GET['pCurso'])){
-        $pCurso = $_GET['pCurso']; 
-        $pesquisa = $_GET['pCurso'];   
-    }else{
-        $pCurso = $_GET['search'];  
-        $pesquisa = $_GET['search'];  
+        $pesquisa = $_GET['pCurso'];
+    } else {
+        $pCurso = $_GET['search'];
+        $pesquisa = $_GET['search'];
     }
-    
+
     $alunos = Aluno::getAlunos('nome LIKE "%' . $pesquisa . '%" OR cpf LIKE "%' . $pesquisa . '%" OR matricula LIKE "%' . $pesquisa . '%" OR curso LIKE "%' . $pCurso . '%"');
-}else{
-   
-    $alunos = Aluno::getAlunos();
+} else {
+
+    $alunos = Aluno::getAlunos(null, null, $paginacao->getLimit());
 }
 
 $resultados = '';
@@ -66,6 +63,18 @@ foreach ($alunos as $aluno) {
         </tr>';
 }
 $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="text-center">Não há alunos disponiveis no momento!</td></tr>';
+
+$pag = '';
+$paginas = $paginacao->getPages();
+$count = 0;
+foreach ($paginas as $key => $pagina) {
+    $count++;
+    //print_r($pagina);
+    $class = $pagina['atual'] ? 'btn-primary' : 'btn-secondary';
+    if ($count <= 5) {
+        $pag .= '<li><a href="listar.php?pagina=' . $pagina["pagina"] . '"><buton type="button" class="btn '.$class.'">' . $pagina["pagina"] . '</button></a></li>';
+    }
+}
 ?>
 <main>
     <?= $mensagem ?>
@@ -74,17 +83,24 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
             <tr>
                 <td></td>
                 <td><select class="form-control" name="pCurso" id="pCurso">
-                <option value="">Selecione o Curso</option>
-                    <option value="Administração">Técnico em Administração - Integrada - Série Anual</option>
-                    <option value="Meio Ambiente">Técnico em Meio Ambiente - Integrada - Série Anual</option>
-                    <option value="Informática para Internet">Técnico em Informática para Internet - Integrada - Série Anual</option>
-                </select></td>
+                        <option value="">Selecione o Curso</option>
+                        <option value="Técnico em Administração - Integrada">Técnico em Administração - Integrada</option>
+                        <option value="Técnico em Informática para Internet - Integrada">Técnico em Informática para Internet - Integrada</option>
+                        <option value="Técnico em Meio Ambiente - Integrada">Técnico em Meio Ambiente - Integrada</option>
+                        <option value="Técnico em Informática (subsequente)">Técnico em Informática (subsequente)</option>
+                        <option value="Técnico em Vendas (subsequente)">Técnico em Vendas (subsequente)</option>
+                        <option value="Tecnologia em Logística (superior)">Tecnologia em Logística (superior)</option>
+                        <option value="Pedagogia (Superior)">Pedagogia (Superior)</option>
+                        <option value="Licenciatura em Computação (superior)">Licenciatura em Computação (superior)</option>
+                        <option value="Sistemas de Informação (Superior)">Sistemas de Informação (Superior)</option>
+                        <option value="FIC/Proeja Assistente Administrativo">FIC/Proeja Assistente Administrativo</option>
+                    </select></td>
                 <td><select class="form-control" name="pPeriodo" id="pPeriodo">
-                <option value="">Selecione o Periodo</option>
-                    <option value="1">1º</option>
-                    <option value="2">2º</option>
-                    <option value="3">3º</option>
-                </select></td>
+                        <option value="">Selecione o Periodo</option>
+                        <option value="1">1º</option>
+                        <option value="2">2º</option>
+                        <option value="3">3º</option>
+                    </select></td>
             </tr>
             <tr>
                 <td><a href="/sistemas/aluno/cadastrar.php"><button class="btn btn-success">Nova Aluno</button></a></td>
@@ -112,22 +128,34 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
             </tbody>
         </table>
     </section>
+    <section>
+        <div class="align-items-center">
+            <ul class="pagination">
+                <buton type="button" class="btn btn-secondary">
+                    <li><a href="index.php?pagina=" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                </buton>
+                <?= $pag ?>
+                <buton type="button" class="btn btn-secondary">
+                    <li><a href="index.php?pagina=" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>
+                </buton>
+            </ul>
+        </div>
+    </section>
 </main>
 <script>
-            var search = document.getElementById('pesquisar');
-            var pCurso = document.getElementById('pCurso');
-            var pPeriodo = document.getElementById('pPeriodo');
-            
-            search.addEventListener("keydown", function(event) {
-                if (event.key === "Enter") {
-                    searchData();
-                    
-                }
-            });
+    var search = document.getElementById('pesquisar');
+    var pCurso = document.getElementById('pCurso');
+    var pPeriodo = document.getElementById('pPeriodo');
+
+    search.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            searchData();
+
+        }
+    });
 
 
-            function searchData() {
-                window.location = 'listar.php?search='+ search.value +'&pCurso='+ pCurso.value +'&pPeriodo='+ pPeriodo.value;
-            }
-            
-        </script>
+    function searchData() {
+        window.location = 'listar.php?search=' + search.value + '&pCurso=' + pCurso.value + '&pPeriodo=' + pPeriodo.value;
+    }
+</script>

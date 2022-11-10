@@ -71,6 +71,11 @@ class Aluno{
     public static function getAluno($id){
         return (new DataBase('aluno'))->select('id = '.$id)->fetchObject(self::class);
     }
+
+    public static function getQuantidadeAlunos($where = null, $order = 'nome', $limit=null){
+        return (new DataBase('aluno'))->select($where, null ,null , 'count(*) as qtd')->fetchObject()->qtd; 
+    }
+
     public static function getAlunos($where = null, $order = 'nome', $limit=null){
         return (new DataBase('aluno'))->select($where, $order,$limit)->fetchAll(PDO::FETCH_CLASS, self::class);
     }

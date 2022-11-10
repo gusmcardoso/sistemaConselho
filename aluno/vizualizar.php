@@ -35,9 +35,9 @@ $resultados .=
             <tr><th class="table-dark">Telefone do Responsavel</th><th class="table-secondary">' . $aluno->telefone_responsavel . '</th></tr>
             <tr><th class="table-dark">Email Institucional</th><th class="table-secondary">' . $aluno->email_institucional . '</th></tr>
             <tr><th class="table-dark">Email Pessoal</th><th class="table-secondary">' . $aluno->email_pessoal . '</th></tr>
-            <tr><th class="table-dark">Curso</th><th class="table-secondary">' . $aluno->curso . '</th>
-            <tr><th class="table-dark">Periodo</th><th class="table-secondary">' . $aluno->periodo . '</th>
-            <tr><th class="table-dark">Data de Nascimento</th><th class="table-secondary">' . date('d/m/Y', strtotime($aluno->dtn)) . '</th>
+            <tr><th class="table-dark">Curso</th><th class="table-secondary">' . $aluno->curso . '</th></tr>
+            <tr><th class="table-dark">Periodo</th><th class="table-secondary">' . $aluno->periodo . '</th></tr>
+            
             ';
 $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="text-center">Não há alunos disponiveis no momento!</td></tr>';
 
