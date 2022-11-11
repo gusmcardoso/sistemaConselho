@@ -4,10 +4,10 @@ namespace App\Db;
 
 class Pagination{
     
-    private $limit;
-    private $results;
-    private $pages;
-    private $currentPage;
+    public $limit;
+    public $results;
+    public $pages;
+    public $currentPage;
 
     public function __construct($results, $currentPage = 1, $limit = 10){
         $this->results = $results;
