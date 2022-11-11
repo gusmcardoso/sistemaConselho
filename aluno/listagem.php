@@ -13,10 +13,15 @@ if (isset($_GET['status'])) {
             break;
     }
 }
-
+unset($_GET['pagina']);
+$gets = http_build_query($_GET);
 
 $resultados = '';
+
 foreach ($alunos as $aluno) {
+    
+
+    
     $resultados .= '<tr>
             <td>' . $aluno->nome . '</td>
             <td>' . $aluno->telefone . '</td>
@@ -24,7 +29,7 @@ foreach ($alunos as $aluno) {
             <td>' . $aluno->email_institucional . '</td>
             <td>' . $aluno->curso . '</td>
             <td>' . $aluno->periodo . '</td>
-            <td><a href="vizualizar.php?id=' . $aluno->id . '"><button class="btn btn-sm btn-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <td><a href="vizualizar.php?id='.$aluno->id.'&'.$gets.'"><button class="btn btn-sm btn-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg></button></a>
                 <a href="editar.php?id=' . $aluno->id . '"><button type="button" class="btn btn-sm btn-primary">
@@ -33,6 +38,7 @@ foreach ($alunos as $aluno) {
                 </button></a>  
             </td>
         </tr>';
+   
 }
 $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="text-center">Não há alunos disponiveis no momento!</td></tr>';
 
@@ -110,9 +116,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="t
                 <li class="page-item"><a class="page-link" href="listar.php?pagina=1&<?=$gets?>">Primeira pagina</a></li>
                 <?php 
                 
-                unset($_GET['pagina']);
-                //unset($_GET['curso']);
-                $gets = http_build_query($_GET);
+                
                 
                 if (($paginacao->currentPage - 1) > 0) { ?>
 

@@ -57,7 +57,7 @@ class Ocorrencia{
     public static function getOcorrencia($id){
         return (new DataBase('ocorrencia'))->select('id = '.$id)->fetchObject(self::class);
     }
-    public static function getOcorrencias($where = null, $order = null, $limit=null){
+    public static function getOcorrencias($where = null, $order = 'id desc', $limit=null){
         return (new DataBase('ocorrencia'))->select($where, $order,$limit)->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 }
