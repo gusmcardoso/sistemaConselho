@@ -4,7 +4,7 @@ use PDO;
 use PDOException;
 
 class DataBase{
-    const HOST = 'localhost';
+    const HOST = '192.168.102.77';
     const DBNAME = 'ifto';
     const USER = 'dba';
     const PASS = '123';
@@ -70,11 +70,25 @@ class DataBase{
 
         $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
         
-        /*
+       /* echo "<pre>";
+        print_r($query);
+        echo "</pre>";
+         */      
+        return $this->execute($query);
+    }
+
+    public function select2($tabela2, $chave1, $chave2, $where = null, $order = null, $limit=null, $fields = '*', $fields2 = 'tipo_ocorrencia'){
+        $where = strlen($where) ? 'WHERE '.$where : '';
+        $order = strlen($order) ? 'ORDER BY '.$order : '';
+        $limit = strlen($limit) ? 'LIMIT '.$limit : ''; 
+
+        $query = 'SELECT '.$this->table.'.'.$fields.','.$tabela2.'.'.$fields2.' as tp FROM '.$this->table.' INNER JOIN '.$tabela2.' ON '.$this->table.'.'.$chave1.' = '.$tabela2.'.'.$chave2.' '.$where.' '.$order.' '.$limit;
+        
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-        */       
+              
+        
         return $this->execute($query);
     }
     

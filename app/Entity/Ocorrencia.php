@@ -8,6 +8,7 @@ class Ocorrencia{
     
     public $id;
     public $aluno;
+    public $tipo_ocorrencia;
     public $descricao;
     public $servidor;
     public $setor_registro;
@@ -31,6 +32,7 @@ class Ocorrencia{
         $banco = new Database('ocorrencia');
         $this->id = $banco->insert([
             'aluno' => $this->aluno->id,
+            'tipo_ocorrencia' => $this->tipo_ocorrencia->id,
             'descricao' => $this->descricao,
             'servidor' => $this->servidor,
             'setor_registro' => $this->setor_registro->id,
@@ -43,6 +45,7 @@ class Ocorrencia{
         $this->data = date('y-m-d H:i');
         return (new DataBase('ocorrencia'))->update('id = '.$this->id, [
             'aluno' => $this->aluno->id,
+            'tipo_ocorrencia' => $this->tipo_ocorrencia->id,
             'descricao' => $this->descricao,
             'servidor' => $this->servidor,
             'setor_registro' => $this->setor_registro->id,
@@ -57,7 +60,16 @@ class Ocorrencia{
     public static function getOcorrencia($id){
         return (new DataBase('ocorrencia'))->select('id = '.$id)->fetchObject(self::class);
     }
+
+    public static function getQuantidadeOcorrencias($where = null, $order = 'id desc', $limit=null){
+        return (new DataBase('ocorrencia'))->select($where, null ,null , 'count(*) as qtd')->fetchObject()->qtd; 
+    }
+
     public static function getOcorrencias($where = null, $order = 'id desc', $limit=null){
         return (new DataBase('ocorrencia'))->select($where, $order,$limit)->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    public static function getOcorrencias2($tabela2='tipo_ocorrencia', $chave1, $chave2, $where = null, $order = 'id desc', $limit=null, $fields='*', $fields2='*'){
+        return (new DataBase('ocorrencia'))->select2($tabela2, $chave1, $chave2, $where, $order,$limit)->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 }

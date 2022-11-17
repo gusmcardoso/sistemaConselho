@@ -7,8 +7,20 @@ require(__DIR__ . '/../vendor/autoload.php');
 
 $aluno = Aluno::getAluno($_GET['id']);
 $ocorrencias = Ocorrencia::getOcorrencias('aluno = ' . $_GET['id']);
-$alunos = Aluno::getAlunos('curso="' . $_GET['curso'] . '" and periodo = "' . $_GET['periodo'] . '"');
-//$qtdAlunos = Aluno::getQuantidadeAlunos('curso='.$_GET['curso']);
+$curso = filter_input(INPUT_GET, 'curso', FILTER_SANITIZE_STRING);
+$periodo = filter_input(INPUT_GET, 'periodo', FILTER_SANITIZE_STRING);
+    
+    $condicoes = [
+        strlen($curso) ? 'curso like "%'. str_replace(' ','%',$curso) .'%"' : null,
+        strlen($curso) ? 'periodo like "%'. str_replace(' ','%',$periodo) .'%"' : null
+    ];
+
+    $condicoes = array_filter($condicoes);
+
+    $where = implode(' AND ', $condicoes);
+
+    $alunos = Aluno::getAlunos($where);
+
 $k = 0;
 $ids_alunos = [];
 foreach ($alunos as $a) {
@@ -19,7 +31,8 @@ foreach ($alunos as $a) {
 $anterior = 0;
 $proximo = 0;
 /*
-echo $_GET['curso']."<pre>";
+echo "curso = ".$curso." periodo = ".$periodo;
+echo "<pre>";
     print_r($ids_alunos);
     echo "</pre>";
 */

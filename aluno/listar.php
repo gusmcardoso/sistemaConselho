@@ -9,7 +9,7 @@
     $periodo = filter_input(INPUT_GET, 'periodo', FILTER_SANITIZE_STRING);
     
     $condicoes = [
-        strlen($busca) ? 'nome like "%'. str_replace(' ','%',$busca) .'%"' : null,
+        strlen($busca) ? 'nome like "%'. str_replace(' ','%',$busca) .'%" or cpf like "%'.$busca.'%"' : null,
         strlen($curso) ? 'curso like "%'. str_replace(' ','%',$curso) .'%"' : null,
         strlen($curso) ? 'periodo like "%'. str_replace(' ','%',$periodo) .'%"' : null
     ];

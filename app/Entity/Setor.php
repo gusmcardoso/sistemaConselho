@@ -8,17 +8,6 @@ class Setor{
     
     public $id;
     public $nome;
-/*
-    private $id;
-    private $titulo;
-    private $descricao;
-    private $quantidade;
-    private $remuneracao;
-    private $data_abertura;
-    private $data_fechamento;
-    private $data;
-*/
-    
 
     public function cadastrar(){
         $tabela = new Database('setor');
