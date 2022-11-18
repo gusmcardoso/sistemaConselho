@@ -12,13 +12,13 @@ class Setor{
     public function cadastrar(){
         $tabela = new Database('setor');
         $this->id = $tabela->insert([
-            'nome' => $this->nome,
+            'nome' => $this->nome
         ]);
         return true;    
     }
     public function atualizar(){
         return (new DataBase('setor'))->update('id = '.$this->id, [
-            'nome' => $this->nome,
+            'nome' => $this->nome
         ]);
     }
     public function excluir(){

@@ -56,8 +56,12 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
     <section>
         <form action="" method="get">
             <div class="row my-1">
+            
+                <div class="col-md-2 d-flex align-items-end">
+                    <a href="cadastrar.php"><button class="btn btn-success">Nova Ocorrência</button></a>
+                </div>
                 <div class="col">
-                    <label>Buscar</label>
+                    <label>Buscar ocorrência</label>
                     <input type="text" name="busca" class="form-control" value="<?= $busca ?>">
                 </div>
                 <div class="col">
@@ -69,7 +73,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
                         ?>
                     </select>
                 </div>
-                <div class="col d-flex align-items-end">
+                <div class="col-md-1 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                         </svg></button>
