@@ -1,3 +1,10 @@
+<?php
+    if (App\Session\User::isLogged()) {
+        $usuario = App\Session\User::getInfo();
+    } else {
+        header('location: ../index.php');
+    }
+    ?>
 <nav class="navbar rounded navbar-dark" style="background-color: #0A5517;">
 
     <div class="col-md">
@@ -6,19 +13,22 @@
             BDif
         </a>
     </div>
+    <?php
+    $count = strlen($usuario['login']);      
+    if($count < 11){
 
+    ?>
     <div class="col-8">
         <a class="btn btn-outline-success text-white" href="/sistemas/aluno/listar.php">Alunos</a>
         <a class="btn btn-outline-success text-white" href="/sistemas/ocorrencia/listar.php">Ocorrências</a>
-        <a class="btn btn-outline-success text-white" href="/sistemas/vaga/listar.php">Vagas de Estagio</a><span class="badge badge-secondary">Novo</span>
+        <a class="btn btn-outline-success text-white" href="/sistemas/notificacao/listar.php">Notificacao</a>
+        <a class="btn btn-outline-success text-white" href="/sistemas/vaga/listar.php">Vagas de Estagio</a>
+        
+        <span class="badge badge-secondary">Novo</span>
     </div>
-    <?php
-    if (App\Session\User::isLogged()) {
-        $usuario = App\Session\User::getInfo();
-    } else {
-        header('location: ../index.php');
-    }
-    ?>
+<?php
+}
+?>
     <div class="col-md-3">
         <button class="btn btn-dark"><?= $usuario['login']; ?></button>
         <a href="/sistemas/logout.php" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">

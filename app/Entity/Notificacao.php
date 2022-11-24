@@ -4,7 +4,7 @@ namespace App\Entity;
 use App\Db\DataBase;
 use PDO;
 
-class Noticicacao{
+class Notificacao{
     
     public $id;
     public $descricao;

@@ -54,12 +54,13 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
 <main>
     <?= $mensagem ?>
     <section>
+        <div class="col-md-2 d-flex align-items-end">
+            <a href="cadastrar.php"><button class="btn btn-success">Nova Ocorrência</button></a>
+        </div>
         <form action="" method="get">
             <div class="row my-1">
-            
-                <div class="col-md-2 d-flex align-items-end">
-                    <a href="cadastrar.php"><button class="btn btn-success">Nova Ocorrência</button></a>
-                </div>
+
+
                 <div class="col">
                     <label>Buscar ocorrência</label>
                     <input type="text" name="busca" class="form-control" value="<?= $busca ?>">
@@ -109,7 +110,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
                 <li class="page-item disabled"><a class="page-link" href="#">Total de Alunos = <?= $paginacao->results ?></a></li>
                 <li class="page-item"><a class="page-link" href="listar.php?pagina=1&<?= $gets ?>">Primeira pagina</a></li>
                 <?php
-/*
+                /*
                 echo "<pre>";
                 print_r($ocorrencias);
                 echo "</pre>";
