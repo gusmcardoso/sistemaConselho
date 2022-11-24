@@ -69,11 +69,11 @@ class DataBase{
         $limit = strlen($limit) ? 'LIMIT '.$limit : ''; 
 
         $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit;
-       /* 
+        /*
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-         */    
+        */  
         return $this->execute($query);
     }
 

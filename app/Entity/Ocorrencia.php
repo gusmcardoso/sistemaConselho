@@ -28,7 +28,7 @@ class Ocorrencia{
     
 
     public function cadastrar(){
-        $this->data_ocorrencia = date('y-m-d H:i');
+        $this->data_ocorrencia = date('Y-m-d H:i');
         $banco = new Database('ocorrencia');
         $this->id = $banco->insert([
             'aluno' => $this->aluno->id,
@@ -42,7 +42,7 @@ class Ocorrencia{
         return true;    
     }
     public function atualizar(){
-        $this->data = date('y-m-d H:i');
+        $this->data = date('Y-m-d H:i');
         return (new DataBase('ocorrencia'))->update('id = '.$this->id, [
             'aluno' => $this->aluno->id,
             'tipo_ocorrencia' => $this->tipo_ocorrencia->id,

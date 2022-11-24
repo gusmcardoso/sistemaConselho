@@ -19,18 +19,24 @@ require (__DIR__.'/../vendor/autoload.php');
     $condicoes = array_filter($condicoes);
 
     $where = implode(' AND ', $condicoes);
-
-    $notificacoes = Notificacao::getNotificacoes();
+    $quantidadeNotificacoes = Notificacao::getQuantidadeNotificacoes($where);
+    $paginacao = new Pagination($quantidadeNotificacoes, $_GET['pagina'] ?? 1, 10);
+    $notificacoes = Notificacao::getNotificacoes($where,null,$paginacao->getLimit());
     /*
     echo "<pre>";
     print_r($notificacoes);
     echo "</pre>";
-*/
+    */
+
     include (__DIR__.'/../includes/header.php');
 
     include (__DIR__.'/../includes/menu.php');
+
+    include (__DIR__.'/formulario.php');
     
     include (__DIR__.'/listagem.php');
+
+    include (__DIR__.'/../includes/paginacao.php');
     
     include (__DIR__.'/../includes/footer.php');
 

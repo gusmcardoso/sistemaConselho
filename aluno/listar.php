@@ -27,6 +27,8 @@
     include (__DIR__.'/../includes/menu.php');
     
     include (__DIR__.'/listagem.php');
+
+    include (__DIR__.'/../includes/paginacao.php');
     
     include (__DIR__.'/../includes/footer.php');
 

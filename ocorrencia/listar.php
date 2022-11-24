@@ -32,6 +32,8 @@
     include ('../includes/menu.php');
     
     include ('listagem.php');
+
+    include (__DIR__.'/../includes/paginacao.php');
     
     include ('../includes/footer.php');
 
