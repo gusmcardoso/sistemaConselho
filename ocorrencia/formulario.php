@@ -22,6 +22,22 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="tipo_ocorrencia">Tipo de Ocorrencia</label>
+            <select name="tipo_ocorrencia" class="form-control" required>
+
+                <?php
+                if ($ocorrencia->tipo_ocorrencia != null) {
+
+                    echo '<option selected value="' . $tipo_ocorrencia->id . '">' . $tipo_ocorrencia->tipo_ocorrencia . '</option>';
+                    include('../includes/select-tipo-ocorrencia.php');
+                } else {
+                    echo '<option selected>...</option>';
+                    include('../includes/select-tipo-ocorrencia.php');
+                }
+                ?>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="descricao">Descrição</label>
             <textarea name="descricao" class="form-control" rows="4" required><?= $ocorrencia->descricao ?></textarea>
         </div>

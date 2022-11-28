@@ -21,7 +21,7 @@ require (__DIR__.'/../vendor/autoload.php');
     $where = implode(' AND ', $condicoes);
     $quantidadeNotificacoes = Notificacao::getQuantidadeNotificacoes($where);
     $paginacao = new Pagination($quantidadeNotificacoes, $_GET['pagina'] ?? 1, 10);
-    $notificacoes = Notificacao::getNotificacoes($where,null,$paginacao->getLimit());
+    $notificacoes = Notificacao::getNotificacoes($where,'id desc',$paginacao->getLimit());
     /*
     echo "<pre>";
     print_r($notificacoes);

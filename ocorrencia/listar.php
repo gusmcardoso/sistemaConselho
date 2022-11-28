@@ -9,7 +9,7 @@
     $tipo = filter_input(INPUT_GET, 'tipo_ocorrencia', FILTER_SANITIZE_STRING);
     
     $condicoes = [
-        strlen($busca) ? 'descricao like "%'. str_replace(' ','%',$busca) .'%" or id like "%'.$busca.'%" or servidor like "%'.$busca.'%"' : null,
+        strlen($busca) ? 'aluno = '.$busca : null,
         strlen($tipo) ? 'tipo_ocorrencia = '.$tipo : null,
     ];
 
@@ -19,7 +19,7 @@
 
     $quantidadeOcorrencias = Ocorrencia::getQuantidadeOcorrencias($where);
     $paginacao = new Pagination($quantidadeOcorrencias, $_GET['pagina'] ?? 1, 10);
-    $ocorrencias = Ocorrencia::getOcorrencias($where,null,$paginacao->getLimit());
+    $ocorrencias = Ocorrencia::getOcorrencias($where,'id desc',$paginacao->getLimit());
     //$ocorrencias2 = Ocorrencia::getOcorrencias2('tipo_ocorrencia','tipo_ocorrencia','id',$where,null,$paginacao->getLimit());
     /*
     echo "<pre>";

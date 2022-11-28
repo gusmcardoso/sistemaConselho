@@ -53,7 +53,7 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
 ?>
 <main>
     <?= $mensagem ?>
-    <section>
+    <section class="my-4">
         <div class="col-md-2 d-flex align-items-end">
             <a href="cadastrar.php"><button class="btn btn-success">Nova Ocorrência</button></a>
         </div>
@@ -62,11 +62,16 @@ $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="8" class="te
 
 
                 <div class="col">
-                    <label>Buscar ocorrência</label>
-                    <input type="text" name="busca" class="form-control" value="<?= $busca ?>">
+                    <label>Pesquisar por Aluno</label>
+                    <select name="busca" class="form-control">
+                        <option value="">Selecione o Aluno</option>
+                        <?php
+                        include('../includes/select-aluno.php');
+                        ?>
+                    </select>
                 </div>
                 <div class="col">
-                    <label>Tipo de Ocorrência</label>
+                    <label>Pesquisar por Tipo de Ocorrência</label>
                     <select name="tipo_ocorrencia" class="form-control">
                         <option value="">Selecione o tipo de ocorrência</option>
                         <?php
