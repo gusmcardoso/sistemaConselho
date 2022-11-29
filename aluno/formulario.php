@@ -36,6 +36,10 @@
             <input type="text" name="curso" class="form-control" required value="<?=$aluno->curso?>">
         </div>
         <div class="form-group">
+            <label for="dtn">Data de Nascimento</label>
+            <input type="dtn" name="dtn" class="form-control" required value="<?=$aluno->dtn?>">
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-success">Enviar</button>
         </div>
     </form>

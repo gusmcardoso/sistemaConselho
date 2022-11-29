@@ -8,11 +8,9 @@ use App\Entity\Notificacao;
 $busca = filter_input(INPUT_GET, 'busca', FILTER_SANITIZE_STRING);
 $curso = filter_input(INPUT_GET, 'curso', FILTER_SANITIZE_STRING);
 $periodo = filter_input(INPUT_GET, 'periodo', FILTER_SANITIZE_STRING);
-if ($count == 11) {
+if ($count == 14) {
 
-
-    
-    $aluno = Aluno::getAlunos('cpf = "' . $cpff . '"')[0];
+    $aluno = Aluno::getAlunos('cpf = "' . $usuario['cpf'] . '"')[0];
 
     $condicoes = [
         'aluno = ' . $aluno->id

@@ -65,7 +65,8 @@ class User{
             
             $_SESSION['user'] = [
                 'login' => $cpff,
-                'nome' => $aluno->nome
+                'nome' => $aluno->nome,
+                'cpf' => $aluno->cpf
             ];
         }
         return true;
