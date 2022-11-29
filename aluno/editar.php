@@ -26,6 +26,7 @@
         $aluno->email_pessoal =  $_POST['email_pessoal'];
         $aluno->matricula =  $_POST['matricula'];
         $aluno->curso =  $_POST['curso'];  
+        $aluno->dtn =  $_POST['dtn']; 
         $aluno->atualizar();
         header('location: listar.php?status=success');
         exit;

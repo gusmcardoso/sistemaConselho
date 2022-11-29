@@ -3,6 +3,8 @@
 namespace App\Session;
 
 use App\Db\DataBase;
+use App\Entity\Aluno;
+use App\Entity\Servidor;
 
 class User{
     private static function init(){
@@ -34,12 +36,40 @@ class User{
     }
     public static function loginAD($login){
         self::init();
+        if(strlen($login)<11){
+           
+            $servidor = new Servidor;
+            
+            $servidor = $servidor->getServidores('matricula = "'.$login.'"')[0];
+            
             $_SESSION['user'] = [
-                'login' => $login
+                'login' => $login,
+                'nome' => $servidor->nome
             ];
-            return true;
-                
-
+            
+        }else{
+            
+            $cpff = '';
+            for ($i = 0; $i < 11; $i++) {
+                if (($i == 3) or ($i == 6)) {
+                    $cpff .= '.';
+                }
+                if ($i == 9) {
+                    $cpff .= '-';
+                }  
+                $cpff .= $login[$i];      
+            }
+            
+            $aluno = new Aluno;
+            $aluno = $aluno->getAlunos('cpf = "'.$cpff.'"')[0];
+            
+            $_SESSION['user'] = [
+                'login' => $cpff,
+                'nome' => $aluno->nome
+            ];
+        }
+        return true;
+    
     }
     public static function isLogged(){
         self::init();

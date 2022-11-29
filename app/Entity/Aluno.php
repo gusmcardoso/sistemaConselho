@@ -20,46 +20,34 @@ class Aluno{
     public $dtn;
     public $ocorrencias;
 
-/*
-    private $id;
-    private $titulo;
-    private $descricao;
-    private $quantidade;
-    private $remuneracao;
-    private $data_abertura;
-    private $data_fechamento;
-    private $data;
-*/
-    
-
     public function cadastrar(){
         $tabela = new Database('aluno');
+        $this->dtn = date('Y-m-d', strtotime($this->dtn));
         $this->id = $tabela->insert([
             'nome' => $this->nome,
             'cpf' => $this->cpf,
             'telefone' => $this->telefone,
-            'telefone' => $this->telefone_responsavel,
+            'telefone_responsavel' => $this->telefone_responsavel,
             'email_institucional' => $this->email_institucional,
             'email_pessoal' => $this->email_pessoal,
             'matricula' => $this->matricula,
             'curso' => $this->curso,
-            'curso_full' => $this->curso_full,
             'periodo' => $this->periodo,
             'dtn' => $this->dtn
         ]);
         return true;    
     }
     public function atualizar(){
+        $this->dtn = date('Y-m-d', strtotime($this->dtn));
         return (new DataBase('aluno'))->update('id = '.$this->id, [
             'nome' => $this->nome,
             'cpf' => $this->cpf,
             'telefone' => $this->telefone,
-            'telefone' => $this->telefone_responsavel,
+            'telefone_responsavel' => $this->telefone_responsavel,
             'email_institucional' => $this->email_institucional,
             'email_pessoal' => $this->email_pessoal,
             'matricula' => $this->matricula,
             'curso' => $this->curso,
-            'curso_full' => $this->curso_full,
             'periodo' => $this->periodo,
             'dtn' => $this->dtn
         ]);

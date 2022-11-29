@@ -13,7 +13,7 @@
         } else {
             header('location: index.php?mensagem=<div class="alert alert-danger">Usuário ou senha incorretos;!</div>');
         }
-        echo "aki2";
+        
        
     //}
     echo "aki1";
@@ -25,3 +25,4 @@
     include ('includes/footer.php');
 
 ?>
+

@@ -83,11 +83,11 @@ class DataBase{
         $limit = strlen($limit) ? 'LIMIT '.$limit : ''; 
 
         $query = 'SELECT '.$this->table.'.'.$fields.','.$tabela2.'.'.$fields2.' as tp FROM '.$this->table.' INNER JOIN '.$tabela2.' ON '.$this->table.'.'.$chave1.' = '.$tabela2.'.'.$chave2.' '.$where.' '.$order.' '.$limit;
-        
+        /*
         echo "<pre>";
         print_r($query);
         echo "</pre>";
-              
+        */      
         
         return $this->execute($query);
     }

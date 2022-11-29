@@ -32,7 +32,7 @@ if (isset($_POST['descricao'])) {
     $ocorrencia->tipo_ocorrencia = $tipo_ocorrencia;
     
     $ocorrencia->descricao =  $_POST['descricao'];
-    $ocorrencia->servidor = $usuario['login'];
+    $ocorrencia->servidor = $usuario['nome'];
     $ocorrencia->setor_registro =  $setor_registro;
     $ocorrencia->setor_destino =  $setor_destino;
 
