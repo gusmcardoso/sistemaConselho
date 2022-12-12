@@ -1,17 +1,12 @@
 <?php
-
-use App\Entity\Aluno;
-
-if (App\Session\User::isLogged()) {
-    $usuario = App\Session\User::getInfo();
-    /*
-    echo "<pre>";
-    print_r($usuario);
-    echo "</pre>";
-    */
-} else {
-    header('location: ../index.php');
-}
+use \App\Session\Login;
+//Dados do usuario logado
+$usuarioLogado = Login::getUsuarioLogado();
+//Detalhes do usuario
+$usuario = $usuarioLogado ? $usuarioLogado['nome'] . ' <a href="/sistemas/logout.php" class="text-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open-fill" viewBox="0 0 16 16">
+<path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+</svg></a>' :
+'Visitante <a href="login.php" class="text-light font-weight-bold ml-2">Entrar</a>'
 ?>
 <nav class="navbar rounded navbar-dark" style="background-color: #0A5517;">
 
@@ -21,27 +16,17 @@ if (App\Session\User::isLogged()) {
 
         </a>
     </div>
-    <?php
-    $count = strlen($usuario['login']);
-    if ($count < 14) {
-    ?>
-        <div class="col-md-7">
+          <div class="col-md-9">
             <a class="btn btn-outline-success text-white" href="/sistemas/aluno/listar.php">Alunos</a>
             <a class="btn btn-outline-success text-white" href="/sistemas/ocorrencia/listar.php">Ocorrências</a>
-            <a class="btn btn-outline-success text-white" href="/sistemas/notificacao/listar.php">Notificacao</a>
+            <a class="btn btn-outline-success text-white" href="/sistemas/notificacao/listar.php">Notificação</a>
             <a class="btn btn-outline-success text-white" href="/sistemas/vaga/listar.php">Vagas de Estagio</a>
 
             <span class="badge badge-secondary">Novo</span>
         </div>
-    <?php
-    }
-    ?>
-    
-    <div class="col-md-4 ml-auto">
-    <button class="btn btn-dark"><?= $usuario['nome']; ?></button>
-        <a href="/sistemas/logout.php" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z" />
-                <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z" />
-            </svg></button></a>
-    </div>
+         <div class="col-md-2 text-light">
+            <a class="text-light text-decoration-none"><?=$usuario?></a>
+         </div>
+
+
 </nav>

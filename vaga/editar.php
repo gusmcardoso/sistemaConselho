@@ -3,7 +3,9 @@
     define('TITLE','Editar Vaga');
     
     use \App\Entity\Vaga;
+    use \App\Session\Login;
 
+    Login::requireLogin();
     if(!isset($_GET['id']) or !is_numeric($_GET['id'])){
         header('location: listar.php?status=error');
         exit;

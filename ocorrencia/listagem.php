@@ -4,7 +4,9 @@ use App\Entity\Aluno;
 use App\Entity\Ocorrencia;
 use App\Entity\Setor;
 use App\Entity\TipoOcorrencia;
+use \App\Session\Login;
 
+Login::requireLogin();
 $mensagem = '';
 if (isset($_GET['status'])) {
     switch ($_GET['status']) {

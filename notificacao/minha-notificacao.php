@@ -3,7 +3,9 @@
 use App\Entity\Aluno;
 use App\Db\Pagination;
 use App\Entity\Notificacao;
+use \App\Session\Login;
 
+Login::requireLogin();
 
 $busca = filter_input(INPUT_GET, 'busca', FILTER_SANITIZE_STRING);
 $curso = filter_input(INPUT_GET, 'curso', FILTER_SANITIZE_STRING);

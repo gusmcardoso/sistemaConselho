@@ -1,7 +1,9 @@
 <?php
 
 use App\Entity\Aluno;
+use \App\Session\Login;
 
+Login::requireLogin();
 $mensagem = '';
 if (isset($_GET['status'])) {
     switch ($_GET['status']) {

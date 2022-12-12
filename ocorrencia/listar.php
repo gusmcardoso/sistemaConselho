@@ -1,40 +1,40 @@
 <?php
 
-    use App\Entity\Ocorrencia;
-    use App\Db\Pagination;
+use App\Db\Pagination;
+use App\Entity\Ocorrencia;
 
-    require ('../vendor/autoload.php');
+require '../vendor/autoload.php';
+use \App\Session\Login;
 
-    $busca = filter_input(INPUT_GET, 'busca', FILTER_SANITIZE_STRING);
-    $tipo = filter_input(INPUT_GET, 'tipo_ocorrencia', FILTER_SANITIZE_STRING);
-    
-    $condicoes = [
-        strlen($busca) ? 'aluno = '.$busca : null,
-        strlen($tipo) ? 'tipo_ocorrencia = '.$tipo : null,
-    ];
+Login::requireLogin();
+$busca = filter_input(INPUT_GET, 'busca', FILTER_SANITIZE_STRING);
+$tipo = filter_input(INPUT_GET, 'tipo_ocorrencia', FILTER_SANITIZE_STRING);
 
-    $condicoes = array_filter($condicoes);
+$condicoes = [
+    strlen($busca) ? 'aluno = ' . $busca : null,
+    strlen($tipo) ? 'tipo_ocorrencia = ' . $tipo : null,
+];
 
-    $where = implode(' AND ', $condicoes);
+$condicoes = array_filter($condicoes);
 
-    $quantidadeOcorrencias = Ocorrencia::getQuantidadeOcorrencias($where);
-    $paginacao = new Pagination($quantidadeOcorrencias, $_GET['pagina'] ?? 1, 10);
-    $ocorrencias = Ocorrencia::getOcorrencias($where,'id desc',$paginacao->getLimit());
-    //$ocorrencias2 = Ocorrencia::getOcorrencias2('tipo_ocorrencia','tipo_ocorrencia','id',$where,null,$paginacao->getLimit());
-    /*
-    echo "<pre>";
-    echo $where;
-    echo "</pre>";
-    */
-    
-    include ('../includes/header.php');
+$where = implode(' AND ', $condicoes);
 
-    include ('../includes/menu.php');
-    
-    include ('listagem.php');
+$quantidadeOcorrencias = Ocorrencia::getQuantidadeOcorrencias($where);
+$paginacao = new Pagination($quantidadeOcorrencias, $_GET['pagina'] ?? 1, 10);
+$ocorrencias = Ocorrencia::getOcorrencias($where, 'id desc', $paginacao->getLimit());
+//$ocorrencias2 = Ocorrencia::getOcorrencias2('tipo_ocorrencia','tipo_ocorrencia','id',$where,null,$paginacao->getLimit());
+/*
+echo "<pre>";
+echo $where;
+echo "</pre>";
+ */
 
-    include (__DIR__.'/../includes/paginacao.php');
-    
-    include ('../includes/footer.php');
+include '../includes/header.php';
 
-?>
+include '../includes/menu.php';
+
+include 'listagem.php';
+
+include __DIR__ . '/../includes/paginacao.php';
+
+include '../includes/footer.php';

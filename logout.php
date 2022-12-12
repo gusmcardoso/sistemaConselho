@@ -2,8 +2,6 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use \App\Session\User;
+use \App\Session\Login;
 
-User::logout();
-header('location: index.php');
-exit;
+Login::logout();

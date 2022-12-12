@@ -1,36 +1,49 @@
 <?php
+require __DIR__ . './vendor/autoload.php';
+use \App\Entity\Usuario;
+use \App\Session\Login;
 
-require __DIR__ . '/vendor/autoload.php';
+Login::requireLogout();
 
-use Google\Client as Google_Client;
-use \App\Session\User;
-$mensagem = '';
+$alertaLogin = '';
+$alertaCadastro = '';
 
-if (!isset($_POST['credential']) || !isset($_POST['g_csrf_token'])) {
-   header('location: index.php');
+if (isset($_POST['acao'])) {
+    switch ($_POST['acao']) {
+        case 'logar':
+            //Busca usuario pelo 'usuario'
+            $obUsuario = Usuario::getUsuario($_POST['usuario']);
+            //Valida a instancia e a senha
+            if (!$obUsuario instanceof Usuario || !password_verify($_POST['senha'], $obUsuario->senha)) {
+                $alertaLogin = 'Usuario ou senha inválidos!';
+                break;
+            }
+            //loga o usuário
+            Login::Login($obUsuario);
+            exit;
+            break;
+        case 'cadastrar':
+
+            if (isset($_POST['nome'], $_POST['usuario'], $_POST['senha'])) {
+                //Busca usuario pelo 'usuario'
+                $obUsuario = Usuario::getUsuario($_POST['usuario']);
+                if ($obUsuario instanceof Usuario) {
+                    $alertaCadastro = 'O usuário digitado já está em uso!';
+                    break;
+                }
+                $obUsuario = new Usuario;
+                $obUsuario->nome = $_POST['nome'];
+                $obUsuario->usuario = $_POST['usuario'];
+                $obUsuario->senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+                $obUsuario->cadastrar();
+            }
+
+            break;
+    }
 }
-$cookie = $_COOKIE['g_csrf_token'] ?? '';
-if ($cookie != $_POST['g_csrf_token']) {
-   header('location: index.php');
-}
-// Get $id_token via HTTPS POST.
 
-$client = new Google_Client(['client_id' => '530889397644-6tof0lg4qnnkbpbkujhpdv8dghre1pfc.apps.googleusercontent.com']);  // Specify the CLIENT_ID of the app that accesses the backend
-$payload = $client->verifyIdToken($_POST['credential']);
-/*
-echo "<pre>";
-print_r($payload);
-echo "<\pre>";
-exit;
-*/
-if(isset($payload['email'])){
-   $valida = User::login($payload['name'],$payload['given_name'],$payload['family_name'],$payload['email'],$payload['picture']);
-   if ($valida == false) {
-      $mensagem = '<div class="alert alert-danger">Erro ao fazer o login! Use seu email institucional!</div>';      
-  }
-   
-   header('location: index.php?mensagem='.$mensagem);
-   
-}
+include __DIR__ . './includes/header.php';
 
-die("Problemas ao consultar a Api");
+include __DIR__ . './includes/formulario-login.php';
+
+include __DIR__ . './includes/footer.php';

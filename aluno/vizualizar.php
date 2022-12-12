@@ -3,23 +3,25 @@
 use App\Entity\Aluno;
 use App\Entity\Ocorrencia;
 
-require(__DIR__ . '/../vendor/autoload.php');
+require __DIR__ . '/../vendor/autoload.php';
+use \App\Session\Login;
 
+Login::requireLogin();
 $aluno = Aluno::getAluno($_GET['id']);
 $ocorrencias = Ocorrencia::getOcorrencias('aluno = ' . $_GET['id']);
 $curso = filter_input(INPUT_GET, 'curso', FILTER_SANITIZE_STRING);
 $periodo = filter_input(INPUT_GET, 'periodo', FILTER_SANITIZE_STRING);
-    
-    $condicoes = [
-        strlen($curso) ? 'curso like "%'. str_replace(' ','%',$curso) .'%"' : null,
-        strlen($curso) ? 'periodo like "%'. str_replace(' ','%',$periodo) .'%"' : null
-    ];
 
-    $condicoes = array_filter($condicoes);
+$condicoes = [
+    strlen($curso) ? 'curso like "%' . str_replace(' ', '%', $curso) . '%"' : null,
+    strlen($curso) ? 'periodo like "%' . str_replace(' ', '%', $periodo) . '%"' : null,
+];
 
-    $where = implode(' AND ', $condicoes);
+$condicoes = array_filter($condicoes);
 
-    $alunos = Aluno::getAlunos($where);
+$where = implode(' AND ', $condicoes);
+
+$alunos = Aluno::getAlunos($where);
 
 $k = 0;
 $ids_alunos = [];
@@ -33,9 +35,9 @@ $proximo = 0;
 /*
 echo "curso = ".$curso." periodo = ".$periodo;
 echo "<pre>";
-    print_r($ids_alunos);
-    echo "</pre>";
-*/
+print_r($ids_alunos);
+echo "</pre>";
+ */
 for ($j = 0; $j < count($ids_alunos); $j++) {
     //    echo "aki = ".$ids_alunos[$j];
     if ($_GET['id'] == $ids_alunos[$j]) {
@@ -50,7 +52,6 @@ if ($anterior == $ids_alunos[-1]) {
 if ($proximo == $ids_alunos[count($ids_alunos)]) {
     $proximo = $ids_alunos[0];
 }
-
 
 $mensagem = '';
 if (isset($_GET['status'])) {
@@ -70,7 +71,7 @@ $oc = '';
 foreach ($ocorrencias as $ocorrencia) {
 
     $oc .= '<tr>
-    <td>'.date('d/m/Y - H:i', strtotime($ocorrencia->data_ocorrencia)).'</td>
+    <td>' . date('d/m/Y - H:i', strtotime($ocorrencia->data_ocorrencia)) . '</td>
     <td>' . $ocorrencia->descricao . '</td>
     <td>' . $ocorrencia->servidor . '</td>
     </tr>';
@@ -78,7 +79,7 @@ foreach ($ocorrencias as $ocorrencia) {
 
 $resultados = '';
 $resultados .=
-    '<tr>
+'<tr>
             <th class="table-dark">Nome</th><th class="table-secondary">' . $aluno->nome . '</th>
             <tr><th class="table-dark">CPF</th><th class="table-secondary">' . $aluno->cpf . '</th></tr>
             <tr><th class="table-dark">Matricula</th><th class="table-secondary">' . $aluno->matricula . '</th></tr>
@@ -88,39 +89,38 @@ $resultados .=
             <tr><th class="table-dark">Email Pessoal</th><th class="table-secondary">' . $aluno->email_pessoal . '</th></tr>
             <tr><th class="table-dark">Curso</th><th class="table-secondary">' . $aluno->curso . '</th></tr>
             <tr><th class="table-dark">Periodo</th><th class="table-secondary">' . $aluno->periodo . '</th></tr>
-            
+
             ';
 $resultados = strlen($resultados) ? $resultados : '<tr><td colspan="10" class="text-center">Não há alunos disponiveis no momento!</td></tr>';
 
-include(__DIR__ . '/../includes/header.php');
+include __DIR__ . '/../includes/header.php';
 
-include(__DIR__ . '/../includes/menu.php');
-
+include __DIR__ . '/../includes/menu.php';
 
 ?>
 
 
 <main>
-    <?= $mensagem ?>
+    <?=$mensagem?>
     <div class="col my-4">
         <a href="listar.php"><button class="btn btn-success">Voltar</button></a>
-        <a href="editar.php?id=<?= $aluno->id ?>"><button type="button" class="btn btn-primary">Editar</button></a>
-        <a href="../ocorrencia/cadastrar.php?aluno=<?= $aluno->id ?>&<?= $gets ?>"><button class="btn btn-primary">Fazer ocorrência</button></a>
-        <a href="vizualizar.php?id=<?= $anterior ?>&<?= $gets ?>"><button class="btn btn-primary">Anterior</button></a>
-        <a href="vizualizar.php?id=<?= $proximo ?>&<?= $gets ?>"><button class="btn btn-primary">Proximo</button></a>
+        <a href="editar.php?id=<?=$aluno->id?>"><button type="button" class="btn btn-primary">Editar</button></a>
+        <a href="../ocorrencia/cadastrar.php?aluno=<?=$aluno->id?>&<?=$gets?>"><button class="btn btn-primary">Fazer ocorrência</button></a>
+        <a href="vizualizar.php?id=<?=$anterior?>&<?=$gets?>"><button class="btn btn-primary">Anterior</button></a>
+        <a href="vizualizar.php?id=<?=$proximo?>&<?=$gets?>"><button class="btn btn-primary">Proximo</button></a>
     </div>
     <section>
         <div class="row">
             <div class="col-md-3">
-                <img class="img-thumbnail" src="../images/alunos/<?= $aluno->cpf ?>.jpg" width="300px" height="400px">
+                <img class="img-thumbnail" src="../images/alunos/<?=$aluno->cpf?>.jpg" width="300px" height="400px">
             </div>
             <div class="col-md-9">
                 <table class="table bg-light table-hover">
                     <tbody>
-                        <?= $resultados ?>
+                        <?=$resultados?>
                     </tbody>
                 </table>
-                
+
             </div>
             <table class="table bg-light table-hover">
                     <thead class="table-dark">
@@ -131,7 +131,7 @@ include(__DIR__ . '/../includes/menu.php');
                         </tr>
                     </thead>
                     <tbody class="table-secondary">
-                        <?= $oc ?>
+                        <?=$oc?>
                     </tbody>
                 </table>
         </div>
@@ -139,7 +139,6 @@ include(__DIR__ . '/../includes/menu.php');
 </main>
 <?php
 
-
-include(__DIR__ . '/../includes/footer.php');
+include __DIR__ . '/../includes/footer.php';
 
 ?>
